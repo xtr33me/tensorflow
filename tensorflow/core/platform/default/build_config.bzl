@@ -5,10 +5,10 @@ load("@protobuf//:protobuf.bzl", "py_proto_library")
 load("//tensorflow:tensorflow.bzl", "if_not_mobile")
 
 # configure may change the following lines
-WITH_GCP_SUPPORT = False
+WITH_GCP_SUPPORT = True
 WITH_HDFS_SUPPORT = False
 WITH_XLA_SUPPORT = False
-WITH_JEMALLOC = True
+WITH_JEMALLOC = False
 
 # Appends a suffix to a list of deps.
 def tf_deps(deps, suffix):
