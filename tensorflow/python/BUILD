@@ -315,6 +315,7 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         "//tensorflow/core:framework",
+        "//tensorflow/core:op_gen_lib",
         "//tensorflow/core:protos_cc",
     ],
     alwayslink = 1,
@@ -578,6 +579,7 @@ py_test(
         ":nn_grad",
         ":nn_ops",
         ":random_ops",
+        ":test_ops",
         ":variables",
         "//tensorflow/core:protos_all_py",
         "//third_party/py/numpy",
@@ -2487,6 +2489,22 @@ py_test(
     ],
 )
 
+cuda_py_test(
+    name = "adam_test",
+    size = "small",
+    srcs = ["training/adam_test.py"],
+    additional_deps = [
+        ":array_ops",
+        ":framework",
+        ":math_ops",
+        ":platform",
+        ":training",
+        ":platform_test",
+        ":client_testlib",
+        "//third_party/py/numpy",
+    ],
+)
+
 cuda_py_tests(
     name = "training_tests",
     size = "small",
@@ -2494,7 +2512,6 @@ cuda_py_tests(
         "training/adadelta_test.py",
         "training/adagrad_da_test.py",
         "training/adagrad_test.py",
-        "training/adam_test.py",
         "training/basic_loops_test.py",
         "training/coordinator_test.py",
         "training/device_setter_test.py",
@@ -2508,7 +2525,6 @@ cuda_py_tests(
         "training/proximal_gradient_descent_test.py",
         "training/queue_runner_test.py",
         "training/rmsprop_test.py",
-        "training/saver_test.py",
         "training/slot_creator_test.py",
         "training/tensorboard_logging_test.py",
         "training/training_ops_test.py",
@@ -2539,6 +2555,41 @@ cuda_py_tests(
         ":sparse_ops",
         ":state_ops",
         ":state_ops_gen",
+        ":summary",
+        ":training",
+        ":util",
+        ":variable_scope",
+        ":variables",
+        "//third_party/py/numpy",
+        "@six_archive//:six",
+        "//tensorflow/core:protos_all_py",
+    ],
+)
+
+cuda_py_test(
+    name = "saver_test",
+    size = "medium",
+    srcs = [
+        "training/saver_test.py",
+    ],
+    additional_deps = [
+        ":array_ops",
+        ":client_testlib",
+        ":control_flow_ops",
+        ":data_flow_ops",
+        ":data_flow_ops_gen",
+        ":errors",
+        ":gradients",
+        ":math_ops",
+        ":nn_grad",
+        ":nn_ops",
+        ":partitioned_variables",
+        ":platform",
+        ":platform_test",
+        ":pywrap_tensorflow",
+        ":random_ops",
+        ":resource_variable_ops",
+        ":sparse_ops",
         ":summary",
         ":training",
         ":util",

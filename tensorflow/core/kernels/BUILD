@@ -256,7 +256,7 @@ tf_cc_test(
     ],
 )
 
-cc_library(
+tf_kernel_library(
     name = "stage_op",
     srcs = ["stage_op.cc"],
     deps = [
@@ -312,6 +312,19 @@ cc_library(
     hdrs = ["reader_base.h"],
     deps = [
         ":reader_base_proto_cc",
+        "//tensorflow/core:framework",
+        "//tensorflow/core:lib",
+    ],
+)
+
+cc_library(
+    name = "record_input_op",
+    srcs = [
+        "record_input_op.cc",
+        "record_yielder.cc",
+        "record_yielder.h",
+    ],
+    deps = [
         "//tensorflow/core:framework",
         "//tensorflow/core:lib",
     ],
@@ -1177,6 +1190,7 @@ cc_library(
         ":priority_queue_op",
         ":queue_ops",
         ":random_shuffle_queue_op",
+        ":record_input_op",
         ":session_ops",
         ":sparse_conditional_accumulator_op",
         ":stack_ops",
@@ -1665,6 +1679,7 @@ tf_cc_tests(
         "colorspace_op_test.cc",
         "crop_and_resize_op_test.cc",
         "non_max_suppression_op_test.cc",
+        "resize_area_op_test.cc",
         "resize_bicubic_op_test.cc",
         "resize_bilinear_op_test.cc",
         "resize_nearest_neighbor_op_test.cc",
@@ -1679,6 +1694,7 @@ tf_cc_tests(
         ":ops_util",
         "//tensorflow/core:core_cpu",
         "//tensorflow/core:framework",
+        "//tensorflow/core:lib_internal",
         "//tensorflow/core:protos_all_cc",
         "//tensorflow/core:test",
         "//tensorflow/core:test_main",
@@ -2588,6 +2604,7 @@ tf_cuda_cc_test(
         ":ops_testutil",
         ":ops_util",
         "//tensorflow/cc:cc_ops",
+        "//tensorflow/cc:cc_ops_internal",
         "//tensorflow/core:core_cpu",
         "//tensorflow/core:core_cpu_internal",
         "//tensorflow/core:framework",
